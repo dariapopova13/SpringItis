@@ -27,12 +27,11 @@ public class Application {
         userService.findAll().forEach(System.out::println);
 
 
-
         System.out.println("Sorted by user name lenght");
         userService.findAll()
                 .stream()
                 .sorted((User user1, User user2)
-                -> Integer.compare(user1.getName().length(), user2.getName().length()))
+                        -> Integer.compare(user1.getName().length(), user2.getName().length()))
                 .forEach(System.out::println);
 
         System.out.println("Sorted by user name age");

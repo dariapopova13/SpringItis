@@ -12,7 +12,10 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -29,14 +32,13 @@ public class UserDaoImpl implements UserDao {
     // language=SQL
     private final static String SAVE_USER = "INSERT INTO users (age, name) VALUES (?,?)";
     private JdbcTemplate jdbcTemplate;
-    private RowMapper<User> rowMapper = new RowMapper<User>() {
-        public User mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new UserBuilder()
-                    .setId(resultSet.getLong("id"))
-                    .setName(resultSet.getString("name"))
-                    .setAge(resultSet.getInt("age"))
-                    .createUser();
-        }
+
+    private RowMapper<User> rowMapper = (ResultSet resultSet, int i) -> {
+        return new UserBuilder()
+                .setId(resultSet.getLong("id"))
+                .setName(resultSet.getString("name"))
+                .setAge(resultSet.getInt("age"))
+                .createUser();
     };
 
     public UserDaoImpl() {
