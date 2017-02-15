@@ -18,7 +18,7 @@ public class Application {
                 .createUser();
 
         System.out.println(userService.find(4L));
-        System.out.println(userService.save(user));
+        System.out.println("Save user id: " + userService.save(user));
         System.out.println(userService.isRegistrated(48L));
         System.out.println(userService.isRegistrated(8L));
         userService.delete(7L);
