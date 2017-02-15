@@ -18,7 +18,6 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private JdbcTemplate jdbcTemplate;
     // language=SQL
     private final static String FIND_USER = "SELECT * FROM users WHERE users.id = ?";
     // language=SQL
@@ -29,7 +28,7 @@ public class UserDaoImpl implements UserDao {
     private final static String UPDATE_USER = "UPDATE  users SET age = ?, name = ? WHERE id = ?";
     // language=SQL
     private final static String SAVE_USER = "INSERT INTO users (age, name) VALUES (?,?)";
-
+    private JdbcTemplate jdbcTemplate;
     private RowMapper<User> rowMapper = new RowMapper<User>() {
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             return new UserBuilder()
@@ -39,6 +38,9 @@ public class UserDaoImpl implements UserDao {
                     .createUser();
         }
     };
+
+    public UserDaoImpl() {
+    }
 
     @Autowired
     public UserDaoImpl(DataSource dataSource) {
