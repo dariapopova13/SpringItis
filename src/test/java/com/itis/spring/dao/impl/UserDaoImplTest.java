@@ -24,7 +24,7 @@ public class UserDaoImplTest {
         userDao.findAll().forEach(System.out::println);
     }
 
-    
+
     @Test
     public void save() throws Exception {
         userDao.save(new UserBuilder()
