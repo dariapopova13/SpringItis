@@ -1,18 +1,19 @@
 package com.itis.spring.model;
 
+import java.util.Collection;
+
 public class User {
 
     private Long id;
     private String name;
     private int age;
+    private Collection<Auto> autos;
 
-    public User(Long id, String name, int age) {
+    public User(Long id, String name, int age, Collection<Auto> autos) {
         this.id = id;
         this.name = name;
         this.age = age;
-    }
-
-    public User() {
+        this.autos = autos;
     }
 
     @Override
@@ -21,9 +22,20 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", autos=" + autos +
                 '}';
     }
 
+    public User() {
+    }
+
+    public Collection<Auto> getAutos() {
+        return autos;
+    }
+
+    public void setAutos(Collection<Auto> autos) {
+        this.autos = autos;
+    }
 
     public Long getId() {
         return id;

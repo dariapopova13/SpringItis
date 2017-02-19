@@ -18,11 +18,11 @@ public class Application {
                 .createUser();
 
         System.out.println(userService.find(4L));
-//        System.out.println("Saved user id: " + userService.save(user));
+        System.out.println("Saved user id: " + userService.save(user));
         userService.delete(7L);
 
         User rammstein = userService.find(4L);
-        rammstein.setName("Till Lindemann");
+        rammstein.setName("Тилль Линдеманн");
         userService.update(rammstein);
         userService.findAll().forEach(System.out::println);
 
@@ -30,7 +30,7 @@ public class Application {
         System.out.println("Sorted by user name lenght");
         userService.findAll()
                 .stream()
-                .sorted((User user1, User user2)
+                .sorted((user1, user2)
                         -> Integer.compare(user1.getName().length(), user2.getName().length()))
                 .forEach(System.out::println);
 
