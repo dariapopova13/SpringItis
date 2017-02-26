@@ -19,13 +19,12 @@ public class Application {
 
         System.out.println(userService.find(4L));
         System.out.println("Saved user id: " + userService.save(user));
-        userService.delete(7L);
+//        userService.delete(7L);
 
-        User rammstein = userService.find(4L);
+        User rammstein = userService.find(1L);
         rammstein.setName("Тилль Линдеманн");
         userService.update(rammstein);
         userService.findAll().forEach(System.out::println);
-
 
         System.out.println("Sorted by user name lenght");
         userService.findAll()

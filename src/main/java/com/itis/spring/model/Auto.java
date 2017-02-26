@@ -1,10 +1,27 @@
 package com.itis.spring.model;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "auto")
+@DynamicUpdate
+@DynamicInsert
 public class Auto {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "model")
     private String model;
+    @ManyToOne
     private User user;
+
+    public Auto() {
+    }
 
     public Auto(Long id, String model, User user) {
 

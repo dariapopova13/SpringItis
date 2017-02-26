@@ -18,7 +18,7 @@ public class AppConfig {
     @Autowired
     private Environment environment;
 
-    @Bean
+    @Bean(name = "com.itis.spring.data.source")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.driver"));

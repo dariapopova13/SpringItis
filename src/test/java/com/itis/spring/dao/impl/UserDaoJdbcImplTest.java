@@ -1,38 +1,43 @@
 package com.itis.spring.dao.impl;
 
-import com.itis.spring.config.TestConfig;
+import com.itis.spring.config.TestJdbcConfig;
 import com.itis.spring.dao.UserDao;
 import com.itis.spring.model.User;
 import com.itis.spring.model.builder.UserBuilder;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
-public class UserDaoImplTest {
+@ContextConfiguration(classes = TestJdbcConfig.class)
+public class UserDaoJdbcImplTest {
 
     @Autowired
+    @Qualifier(value = "com.itis.spring.test.jdbc.user.dao")
     private UserDao userDao;
 
     @Test
     public void delete() throws Exception {
         userDao.delete(3L);
-        System.out.println("After deleting user with id = 3");
-        userDao.findAll().forEach(System.out::println);
+        for (User user : userDao.findAll()) {
+            assertNotEquals(user.getId(), new Long(3));
+        }
     }
-
 
     @Test
     public void save() throws Exception {
-        userDao.save(new UserBuilder()
-                .setName("Saved user")
+        Long id = userDao.save(new UserBuilder()
+                .setName("Saved User")
                 .setAge(55)
                 .createUser());
-        System.out.println("After saving user");
-        userDao.findAll().forEach(System.out::println);
+        assertEquals(new Long(4), id);
     }
 
     @Test
@@ -40,18 +45,22 @@ public class UserDaoImplTest {
         User user = userDao.find(1L);
         user.setName("Updated user");
         userDao.update(user);
-        System.out.println("After updating user  with id = 1");
-        userDao.findAll().forEach(System.out::println);
+        assertEquals("Updated user", userDao.find(1L).getName());
     }
 
     @Test
     public void find() throws Exception {
-        System.out.println("Aftre finding user with id = 1 \n" + userDao.find(1L));
+        assertEquals(userDao.find(2L).getName(), "user2");
     }
 
     @Test
     public void findAll() throws Exception {
-        System.out.println("After finding all");
+        Long i = 1L;
+        for (User user : userDao.findAll()) {
+            assertEquals(i, user.getId());
+            i = i + 1;
+        }
         userDao.findAll().forEach(System.out::println);
     }
+
 }

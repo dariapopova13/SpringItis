@@ -1,12 +1,26 @@
 package com.itis.spring.model;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.*;
 import java.util.Collection;
 
+@Entity
+@Table(name = "users")
+@DynamicInsert
+@DynamicUpdate
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private int age;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Auto> autos;
 
     public User(Long id, String name, int age, Collection<Auto> autos) {
@@ -14,6 +28,9 @@ public class User {
         this.name = name;
         this.age = age;
         this.autos = autos;
+    }
+
+    public User() {
     }
 
     @Override
@@ -24,9 +41,6 @@ public class User {
                 ", age=" + age +
                 ", autos=" + autos +
                 '}';
-    }
-
-    public User() {
     }
 
     public Collection<Auto> getAutos() {

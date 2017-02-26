@@ -1,4 +1,4 @@
-package com.itis.spring.dao.impl;
+package com.itis.spring.dao.impl.jdbc;
 
 import com.itis.spring.dao.UserDao;
 import com.itis.spring.model.Auto;
@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public class UserDaoImpl implements UserDao {
+@Repository(value = "com.itis.spring.jdbc.user.dao")
+public class UserDaoJdbcImpl implements UserDao {
 
     // language=SQL
     private final static String FIND_USER = "SELECT * FROM users WHERE users.id = ?";
@@ -61,11 +61,11 @@ public class UserDaoImpl implements UserDao {
         return auto;
     };
 
-    public UserDaoImpl() {
+    public UserDaoJdbcImpl() {
     }
 
     @Autowired
-    public UserDaoImpl(DataSource dataSource) {
+    public UserDaoJdbcImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         userMap = new HashMap<>();
     }
@@ -91,7 +91,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, user.getName());
             return preparedStatement;
         }, holder);
-        return (Long) holder.getKeys().get("id");
+        return (Long) holder.getKeys().get("SCOPE_IDENTITY()");
     }
 
     public List<User> findAll() {
