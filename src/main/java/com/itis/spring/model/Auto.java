@@ -24,7 +24,6 @@ public class Auto {
     }
 
     public Auto(Long id, String model, User user) {
-
         this.id = id;
         this.model = model;
         this.user = user;
@@ -60,5 +59,25 @@ public class Auto {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Auto auto = (Auto) o;
+
+        if (!id.equals(auto.id)) return false;
+        if (model != null ? !model.equals(auto.model) : auto.model != null) return false;
+        return true;
+//        return user != null ? user.getId().equals(auto.getUser().getId()) : auto.user == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        return result;
     }
 }

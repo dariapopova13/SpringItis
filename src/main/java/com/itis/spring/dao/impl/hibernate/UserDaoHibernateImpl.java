@@ -19,7 +19,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public User find(Long id) {
-        return (User) sessionFactory.getCurrentSession().get(User.class, id);
+        return (User) sessionFactory.openSession().get(User.class, id);
     }
 
     @Override
@@ -31,18 +31,18 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public Long save(User user) {
-        return (Long) sessionFactory.getCurrentSession().save(user);
+        return (Long) sessionFactory.openSession().save(user);
     }
 
     @Override
     @SuppressWarnings("all")
     public List<User> findAll() {
-        return sessionFactory.getCurrentSession()
+        return sessionFactory.openSession()
                 .createQuery("from " + User.class.getName()).list();
     }
 
     @Override
     public void update(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.openSession().merge(user);
     }
 }

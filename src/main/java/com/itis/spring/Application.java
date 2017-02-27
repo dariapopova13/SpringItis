@@ -21,6 +21,8 @@ public class Application {
         System.out.println("Saved user id: " + userService.save(user));
 //        userService.delete(7L);
 
+        userService.delete(2L);
+
         User rammstein = userService.find(1L);
         rammstein.setName("Тилль Линдеманн");
         userService.update(rammstein);

@@ -18,30 +18,30 @@ public class AutoDaoHibernateImpl  implements AutoDao {
 
     @Override
     public Auto find(Long id) {
-        return (Auto) sessionFactory.getCurrentSession().get(Auto.class, id);
+        return (Auto) sessionFactory.openSession().get(Auto.class, id);
     }
 
     @Override
     public void delete(Long id) {
-        sessionFactory.getCurrentSession().delete(
+        sessionFactory.openSession().delete(
                 new AutoBuilder().setId(id).createAuto()
         );
     }
 
     @Override
     public Long save(Auto auto) {
-        return (Long) sessionFactory.getCurrentSession().save(auto);
+        return (Long) sessionFactory.openSession().save(auto);
     }
 
     @Override
     @SuppressWarnings("all")
     public List<Auto> findAll() {
-        return sessionFactory.getCurrentSession()
+        return sessionFactory.openSession()
                 .createQuery("from " + Auto.class.getName()).list();
     }
 
     @Override
     public void update(Auto auto) {
-        sessionFactory.getCurrentSession().update(auto);
+        sessionFactory.openSession().merge(auto);
     }
 }
