@@ -16,31 +16,8 @@ public class Application {
                 .setName("User")
                 .setAge(23)
                 .createUser();
-
-        System.out.println(userService.find(4L));
-        System.out.println("Saved user id: " + userService.save(user));
-//        userService.delete(7L);
-
-        userService.delete(2L);
-
-        User rammstein = userService.find(1L);
-        rammstein.setName("Тилль Линдеманн");
-        userService.update(rammstein);
+        System.out.println(userService.save(user));
         userService.findAll().forEach(System.out::println);
-
-        System.out.println("Sorted by user name lenght");
-        userService.findAll()
-                .stream()
-                .sorted((user1, user2)
-                        -> Integer.compare(user1.getName().length(), user2.getName().length()))
-                .forEach(System.out::println);
-
-        System.out.println("Sorted by user name age");
-        userService.findAll()
-                .stream()
-                .sorted((user1, user2)
-                        -> Integer.compare(user1.getAge(), user2.getAge()))
-                .forEach(System.out::println);
 
 
     }

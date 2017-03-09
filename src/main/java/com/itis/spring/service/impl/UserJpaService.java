@@ -1,46 +1,48 @@
 package com.itis.spring.service.impl;
 
-import com.itis.spring.dao.UserDao;
 import com.itis.spring.model.User;
+import com.itis.spring.repository.UserRepository;
 import com.itis.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Service
-//@Transactional
-public class UserServiceImpl implements UserService {
+@Service
+@Transactional
+public class UserJpaService implements UserService {
 
     @Autowired
-    @Qualifier("com.itis.spring.hibernate.user.dao")
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Override
     public boolean isRegistrated(Long id) {
-        return userDao.find(id) != null;
+        return false;
     }
 
+    @Override
     public User find(Long id) {
-        return userDao.find(id);
+        return userRepository.findOne(id);
     }
 
+    @Override
     public void delete(Long id) {
-        userDao.delete(id);
+        userRepository.delete(id);
     }
 
+    @Override
     public Long save(User user) {
-        return userDao.save(user);
+        return userRepository.save(user).getId();
     }
 
+    @Override
     public List<User> findAll() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 
+    @Override
     public void update(User user) {
-        userDao.update(user);
+        userRepository.save(user);
     }
 }

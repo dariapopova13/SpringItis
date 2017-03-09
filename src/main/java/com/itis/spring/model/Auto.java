@@ -17,7 +17,7 @@ public class Auto {
     private Long id;
     @Column(name = "model")
     private String model;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     public Auto() {
